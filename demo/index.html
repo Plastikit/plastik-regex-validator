@@ -105,7 +105,7 @@
       color: red;
     }
     
-    input {
+    input:not([type="checkbox"]) {
       width: 100%;
     }
     
@@ -126,17 +126,20 @@
     
     <hr>
       
-      <plastik-regex-validator regex="[[regex]]" input="[[input]]" valid="{{valid}}"></plastik-regex-validator>
+      <plastik-regex-validator regex="[[regex]]"></plastik-regex-validator>
       
       <div>
         <label>Enter a regex:</label> <input is="iron-input" bind-value="{{regex}}">
       </div>
       <div>
-        <label>Enter some text:</label> <input is="iron-input" value="{{input::input}}">
+        <label>Require value? <input type="checkbox" checked="{{required::change}}"></label>
+      </div>
+      <div>
+        <label>Enter some text:</label> <input is="iron-input" bind-value="{{input}}" required$="[[required]]" validator="plastik-regex-validator">
       </div>
 
-      <label class="valid" hidden$="[[!valid]]">Valid data!</label>
-      <label class="invalid" hidden$="[[valid]]">Invalid data.</label>
+      <label class="valid" hidden$="[[!refreshValidState(regex, input, required)]]">Valid data!</label>
+      <label class="invalid" hidden$="[[refreshValidState(regex, input, required)]]">Invalid data.</label>
      
     </div>
       
@@ -146,6 +149,13 @@
     "use strict";
     
     var template = document.querySelector('#t');
+    
+    template.required = true;
+    
+    template.refreshValidState = function() {
+      return (this.$$('input[validator]') ||
+              document.querySelector('input[validator]')).validate();
+    };
     
     document.addEventListener('WebComponentsReady', function() {
       template.regex = '/^([a-z0-9_.\\-+]+)@([\\da-z.-]+)\\.([a-z.]{2,63})$/i';

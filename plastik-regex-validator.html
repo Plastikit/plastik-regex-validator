@@ -12,13 +12,15 @@
    * ### Example
    * 
    * ```html
-   *     <input is="iron-input" bind-value="{{value}}">
+   * <input is="iron-input" bind-value="{{value1}}" validator="alphanumeric-validator">
    * 
-   *     <plastik-regex-validator regex="/^[0-9]$/" input="[[value]]" valid="{{isValid}}">
-   *     </plastik-regex-validator>
+   * <plastik-regex-validator regex="/^[a-z0-9]$/i" validator-name="alphanumeric-validator">
+   * </plastik-regex-validator>
    * 
-   *     <label hidden$="[[isValid]]">Invalid input! Digits only.</label>
-   *     <label hidden$="[[!isValid]]">Valid digit-only input!</label>
+   * <input is="iron-input" bind-value="{{value2}}" validator="zip-validator">
+   * 
+   * <plastik-regex-validator regex="/^\d{5,6}(?:[-\s]\d{4})?$/" validator-name="zip-validator">
+   * </plastik-regex-validator>
    * ```
    * 
    * @demo demo/index.html
@@ -39,27 +41,6 @@
       regex: {
         type: String,
         observer: '_regexChanged'
-      },
-      /**
-       * Sets the input to validate.
-       *
-       * @attribute input
-       * @type {string}
-       */
-      input: {
-        type: String,
-        observer: '_inputChanged'
-      },
-      /**
-       * Gets whether or not the string provided on the `input` property is valid.
-       *
-       * @attribute valid
-       * @type {boolean}
-       */
-      valid: {
-        type: Boolean,
-        readOnly: true,
-        notify: true
       }
     },
     
@@ -108,11 +89,6 @@
         this._regex = null;
         console.error(err);
       }
-      this._setValid(this.validate(this.input));
-    },
-    
-    _inputChanged: function(input) {
-      this._setValid(this.validate(input));
     }
   });
 </script>

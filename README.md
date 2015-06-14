@@ -27,11 +27,13 @@ to the desired restrictions.
 ### Example
 
 ```html
-    <input is="iron-input" bind-value="{{value}}">
+<input is="iron-input" bind-value="{{value1}}" validator="alphanumeric-validator">
 
-    <plastik-regex-validator regex="/^[0-9]$/" input="[[value]]" valid="{{isValid}}">
-    </plastik-regex-validator>
+<plastik-regex-validator regex="/^[a-z0-9]$/i" validator-name="alphanumeric-validator">
+</plastik-regex-validator>
 
-    <label hidden$="[[isValid]]">Invalid input! Digits only.</label>
-    <label hidden$="[[!isValid]]">Valid digit-only input!</label>
+<input is="iron-input" bind-value="{{value2}}" validator="zip-validator">
+
+<plastik-regex-validator regex="/^\d{5,6}(?:[-\s]\d{4})?$/" validator-name="zip-validator">
+</plastik-regex-validator>
 ```
