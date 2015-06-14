@@ -135,11 +135,12 @@
         <label>Require value? <input type="checkbox" checked="{{required::change}}"></label>
       </div>
       <div>
-        <label>Enter some text:</label> <input is="iron-input" bind-value="{{input}}" required$="[[required]]" validator="plastik-regex-validator">
+        <label>Enter some text:</label> <input is="iron-input" bind-value="{{input}}"
+          required$="[[required]]" validator="plastik-regex-validator" invalid="{{inputInvalid}}">
       </div>
 
-      <label class="valid" hidden$="[[!refreshValidState(regex, input, required)]]">Valid data!</label>
-      <label class="invalid" hidden$="[[refreshValidState(regex, input, required)]]">Invalid data.</label>
+      <label class="valid" hidden$="[[inputInvalid]]">Valid data!</label>
+      <label class="invalid" hidden$="[[!inputInvalid]]">Invalid data.</label>
      
     </div>
       
@@ -150,11 +151,13 @@
     
     var template = document.querySelector('#t');
     
+    template.observers = [ 'revalidate(required, regex, input)' ];
+    
     template.required = true;
     
-    template.refreshValidState = function() {
-      return (this.$$('input[validator]') ||
-              document.querySelector('input[validator]')).validate();
+    template.revalidate = function() {
+      (document.querySelector('input[validator]') ||
+        this.$$('input[validator]')).validate();
     };
     
     document.addEventListener('WebComponentsReady', function() {
