@@ -4,7 +4,7 @@
   "authors": [
     "The Plastikit Authors <developers@plastikit.org>"
   ],
-  "description": "Regular expression validator for iron-input elements",
+  "description": "Regular expression validator for Polymer",
   "keywords": [
     "web-component",
     "web-components",
