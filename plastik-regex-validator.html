@@ -1,0 +1,118 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-validator-behavior/iron-validator-behavior.html">
+
+<script>
+  /**
+   * `plastik-regex-validator` validates user input against a specified regular expression.
+   * 
+   * Regular expressions are executed against the entire input string. Therefore, it is
+   * important to use `^` and `$` as necessary to ensure that the entire string conforms
+   * to the desired restrictions.
+   * 
+   * ### Example
+   * 
+   * ```html
+   *     <input is="iron-input" bind-value="{{value}}">
+   * 
+   *     <plastik-regex-validator regex="/^[0-9]$/" input="[[value]]" valid="{{isValid}}">
+   *     </plastik-regex-validator>
+   * 
+   *     <label hidden$="[[isValid]]">Invalid input! Digits only.</label>
+   *     <label hidden$="[[!isValid]]">Valid digit-only input!</label>
+   * ```
+   * 
+   * @demo demo/index.html
+   * @polymerBehavior
+   */
+  Polymer({
+    is: 'plastik-regex-validator',
+    
+    properties: {
+      /**
+       * The regular expression to use for validation. Supports both regular
+       * expressions with and without slashes (e.g. `/^[a-z]$/` and `^[a-z]$`). If flags
+       * are desired, Javascript-style syntax must be used (e.g. `/^[a-z]+$/i`).
+       *
+       * @attribute regex
+       * @type {string}
+       */
+      regex: {
+        type: String,
+        observer: '_regexChanged'
+      },
+      /**
+       * Sets the input to validate.
+       *
+       * @attribute input
+       * @type {string}
+       */
+      input: {
+        type: String,
+        observer: '_inputChanged'
+      },
+      /**
+       * Gets whether or not the string provided on the `input` property is valid.
+       *
+       * @attribute valid
+       * @type {boolean}
+       */
+      valid: {
+        type: Boolean,
+        readOnly: true,
+        notify: true
+      }
+    },
+    
+    behaviors: [
+      Polymer.IronValidatorBehavior
+    ],
+    
+    /**
+     * Validates input against the regular expression.
+     *
+     * @method validate
+     * @param {string} input The input to validate.
+     */
+    validate: function(input) {
+      if (!this._regex) { return true; }
+      if (input === null || typeof input === 'undefined') {
+        input = '';
+      } else if (typeof input !== 'string') {
+        console.warn((typeof input) + ' passed to regex validator.');
+        return false;
+      }
+      return this._regex.test(input);
+    },
+    
+    _regex: null,
+    
+    _regexChanged: function(regex) {
+      if (!regex || typeof regex !== 'string') {
+        this._regex = null;
+        return;
+      }
+      
+      var firstSlash = regex.indexOf('/');
+      var lastSlash = regex.lastIndexOf('/');
+      var flags;
+      
+      try {
+        if (firstSlash === 0 && lastSlash > 1 &&
+            (regex.length == lastSlash + 1 || (regex.length > lastSlash + 1 &&
+            /^[gim]*$/.test(flags = regex.substring(lastSlash + 1))))) {
+          this._regex = new RegExp(regex.substring(1, lastSlash), flags);
+        } else {
+          this._regex = new RegExp(regex);
+        }
+      } catch (err) {
+        this._regex = null;
+        console.error(err);
+      }
+      this._setValid(this.validate(this.input));
+    },
+    
+    _inputChanged: function(input) {
+      this._setValid(this.validate(input));
+    }
+  });
+</script>

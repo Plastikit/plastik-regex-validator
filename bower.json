@@ -1,0 +1,36 @@
+{
+  "name": "plastik-regex-validator",
+  "version": "0.0.1",
+  "authors": [
+    "The Plastikit Authors <developers@plastikit.org>"
+  ],
+  "description": "Regular expression validator for iron-input elements",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "regular-expressions",
+    "regex",
+    "validation",
+    "input"
+  ],
+  "main": "plastik-regex-validator.html",
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/Plastikit/plastik-regex-validator/",
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "iron-validator-behavior": "PolymerElements/iron-validator-behavior#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-input": "PolymerElements/iron-input#^1.0.0",
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "test-fixture": "PolymerElements/test-fixture#^1.0.0",
+    "web-component-tester": "*",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  }
+}

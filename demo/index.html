@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>plastik-regex-validator demo</title>
+  
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro" />
+  <link rel="import" href="../../polymer/polymer.html" />
+  <link rel="import" href="../../iron-input/iron-input.html" />
+  <link rel="import" href="../../paper-styles/paper-styles.html" />
+  <link rel="import" href="../plastik-regex-validator.html" />
+    
+  <style is="custom-style">
+    html {
+      padding: 0;
+      margin: 0;
+    }
+    
+    body, input {
+      font: normal normal 400 14px RobotoDraft,Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;
+    }
+    
+    body {
+      background: #eee;
+      margin: 0;
+      padding: 8px 0;
+    }
+    
+    @media (max-width: 816px) {
+      body {
+        padding: 0;
+      }
+    }
+    
+    .container {
+      margin: auto;
+      max-width: 800px;
+      background: #fafafa;
+      box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 16px;
+    }
+    
+    h2 {
+      font-size: 24px;
+      font-weight: 300;
+    }
+    
+    h3 {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    
+    hr {
+      border: none;
+      height: 1px;
+      background: rgba(0, 0, 0, .12);
+    }
+    
+    p, .nothing {
+      color: rgba(0, 0, 0, .54);
+    }
+    
+    html, body, p span {
+      color: rgba(0, 0, 0, .87);
+    }
+    
+    pre {
+      padding: 16px;
+      max-width: 832px;
+      white-space: pre-wrap;
+      font: normal normal 400 14px/16px 'Source Code Pro',Monaco,Menlo,Consolas,'Courier New',monospace;
+      background: #f5f5f5;
+    }
+    
+    .item-content {
+      padding: 16px;
+    }
+    
+    .item-header {
+      padding: 0 16px;
+    }
+    
+    .item-header {
+      height: 48px;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      font-size: 18px;
+    }
+    
+    .item-content {
+      font-size: 16px;
+      line-height: 18px;
+    }
+    
+    .valid {
+      color: green;
+    }
+    
+    .invalid {
+      color: red;
+    }
+    
+    input {
+      width: 100%;
+    }
+    
+    label, input {
+      padding: 4px;
+      margin: 4px;
+    }
+  </style>
+
+</head>
+<body>
+
+  <template id="t" is="dom-bind">
+    
+    <div class="container">
+      
+    <h2>&lt;plastik-regex-validator&gt; demo</h2>
+    
+    <hr>
+      
+      <plastik-regex-validator regex="[[regex]]" input="[[input]]" valid="{{valid}}"></plastik-regex-validator>
+      
+      <div>
+        <label>Enter a regex:</label> <input is="iron-input" bind-value="{{regex}}">
+      </div>
+      <div>
+        <label>Enter some text:</label> <input is="iron-input" value="{{input::input}}">
+      </div>
+
+      <label class="valid" hidden$="[[!valid]]">Valid data!</label>
+      <label class="invalid" hidden$="[[valid]]">Invalid data.</label>
+     
+    </div>
+      
+  </template>
+
+  <script>
+    "use strict";
+    
+    var template = document.querySelector('#t');
+    
+    document.addEventListener('WebComponentsReady', function() {
+      template.regex = '/^([a-z0-9_.\\-+]+)@([\\da-z.-]+)\\.([a-z.]{2,63})$/i';
+      template.input = 'Wish.I.worked@google.com';
+    });
+    
+  </script>
+</body>
+</html>
