@@ -94,7 +94,7 @@
 
     <hr>
 
-      <plastik-regex-validator regex="[[regex]]"></plastik-regex-validator>
+      <plastik-regex-validator regex="[[regex]]" validator-name="my-regex"></plastik-regex-validator>
 
       <div>
         <label>Enter a regex:</label> <iron-input bind-value="{{regex}}"><input></iron-input>
@@ -107,7 +107,7 @@
       </div>
       <div>
         <label>Enter some text [[inputInvalid]]:</label>
-        <iron-input bind-value="{{input}}" required="[[required]]" validator="plastik-regex-validator" invalid="{{inputInvalid}}">
+        <iron-input bind-value="{{input}}" required="[[required]]" validator="my-regex" invalid="{{inputInvalid}}">
           <input>
         </iron-input>
       </div>
