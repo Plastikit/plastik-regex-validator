@@ -123,20 +123,20 @@
 
     class DemoElement extends Polymer.Element {
       static get is() { return "demo-element"; }
-      static get config() {
+      static get properties() {
         return {
-          properties: {
-            regex: {
-              type: String,
-              value: '/^([a-z0-9_.\\-+]+)@([\\da-z.-]+)\\.([a-z.]{2,63})$/i'
-            },
-            input: {
-              type: String,
-              value: 'Wish.I.worked@google.com'
-            }
+          regex: {
+            type: String,
+            value: '/^([a-z0-9_.\\-+]+)@([\\da-z.-]+)\\.([a-z.]{2,63})$/i'
           },
-          observers: [ 'revalidate(required, regex, input)' ],
-        }
+          input: {
+            type: String,
+            value: 'Wish.I.worked@google.com'
+          },
+        };
+      }
+      static get observers() {
+        return ['revalidate(required, regex, input)'];
       }
       revalidate() {
         const input = this.root.querySelector('iron-input[validator]');
