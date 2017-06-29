@@ -1,6 +1,5 @@
 {
   "name": "plastik-regex-validator",
-  "version": "0.0.2",
   "authors": [
     "The Plastikit Authors <developers@plastikit.org>"
   ],
@@ -23,14 +22,12 @@
     "/demo/"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.0.0",
-    "iron-validator-behavior": "PolymerElements/iron-validator-behavior#^1.0.0"
+    "polymer": "~2.0.0",
+    "iron-meta": "~2.0.0"
   },
   "devDependencies": {
-    "iron-input": "PolymerElements/iron-input#^1.0.0",
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "test-fixture": "PolymerElements/test-fixture#^1.0.0",
-    "web-component-tester": "*",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+    "iron-input": "~2.0.0",
+    "iron-component-page": "~2.0.0",
+    "webcomponentsjs": "~1.0.0"
   }
 }

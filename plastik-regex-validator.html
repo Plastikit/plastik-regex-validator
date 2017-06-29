@@ -1,34 +1,34 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-validator-behavior/iron-validator-behavior.html">
+<link rel="import" href="../iron-meta/iron-meta.html">
 
 <script>
   /**
    * `plastik-regex-validator` validates user input against a specified regular expression.
-   * 
+   *
    * Regular expressions are executed against the entire input string. Therefore, it is
    * important to use `^` and `$` as necessary to ensure that the entire string conforms
    * to the desired restrictions.
-   * 
+   *
    * ### Example
-   * 
+   *
    * ```html
    * <input is="iron-input" bind-value="{{value1}}" validator="alphanumeric-validator">
-   * 
+   *
    * <plastik-regex-validator regex="/^[a-z0-9]$/i" validator-name="alphanumeric-validator">
    * </plastik-regex-validator>
-   * 
+   *
    * <input is="iron-input" bind-value="{{value2}}" validator="zip-validator">
-   * 
+   *
    * <plastik-regex-validator regex="/^\d{5,6}(?:[-\s]\d{4})?$/" validator-name="zip-validator">
    * </plastik-regex-validator>
    * ```
-   * 
+   *
    * @demo demo/index.html
    * @polymerBehavior
    */
   Polymer({
     is: 'plastik-regex-validator',
-    
+
     properties: {
       /**
        * The regular expression to use for validation. Supports both regular
@@ -41,13 +41,13 @@
       regex: {
         type: String,
         observer: '_regexChanged'
+      },
+      validatorName: {
+        type: String,
+        observer: '_validatorNameChanged'
       }
     },
-    
-    behaviors: [
-      Polymer.IronValidatorBehavior
-    ],
-    
+
     /**
      * Validates input against the regular expression.
      *
@@ -64,19 +64,25 @@
       }
       return this._regex.test(input);
     },
-    
+
+    _validatorNameChanged(name) {
+      if (name) {
+        new Polymer.IronMeta({type: 'validator', key: name, value: this});
+      }
+    },
+
     _regex: null,
-    
+
     _regexChanged: function(regex) {
       if (!regex || typeof regex !== 'string') {
         this._regex = null;
         return;
       }
-      
+
       var firstSlash = regex.indexOf('/');
       var lastSlash = regex.lastIndexOf('/');
       var flags;
-      
+
       try {
         if (firstSlash === 0 && lastSlash > 1 &&
             (regex.length == lastSlash + 1 || (regex.length > lastSlash + 1 &&
